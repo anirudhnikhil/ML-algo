@@ -1,3 +1,6 @@
+#This code performs Principal Component Analysis on Boston Housing dataset and cereals dataset.
+
+
 boston.housing.df <- read.csv("BostonHousing.csv", header = TRUE)
 head(boston.housing.df, 9)
 summary(boston.housing.df)
