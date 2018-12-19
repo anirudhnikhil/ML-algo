@@ -1,22 +1,9 @@
+#This code involves applying Association Rules based on category wise purchase behavior of customers of Charles Book Club. This helps in making recommendations for customers.
+
+rm(list=ls())
 # install package arules
 install.packages("arules")
 library(arules)
-
-# Binary incidence matrix, transactions database, and rules for faceplate example
-fp.df <- read.csv("Faceplate.csv")
-# Remove first column and convert to matrix
-fp.mat <- as.matrix(fp.df[ , -1])
-# Convert the binary incidence matrix into a transactions database
-fp.trans <- as(fp.mat, "transactions")
-inspect(fp.trans)
-
-# get rules
-# when running apriori(), include the minimum support, minimum confidence, and target
-# as arguments.
-rules <- apriori(fp.trans, parameter = list(supp = 0.2, conf = 0.5, target = "rules"))
-
-# inspect the first six rules, sorted by their lift
-inspect(head(sort(rules, by="lift"), n=6))
 
 
 # Rules for book purchase transactions
@@ -50,12 +37,12 @@ m<- matrix(nrow=1000, ncol=100)
 #simulated ratings (1% of the data)
 m[sample.int(100*1000, 2000)] <- ceiling(runif(1000, 0, 5))
 # convert into a realRatingMatrix
-r<- as(m, "realRatingMatrix")
+r<- as.matrix(m, "realRatingMatrix")
 
 ## get some information
 
-rowCounts(r)
-colCounts(r)
+nrow(r)
+ncol(r)
 rowMeans(r)
 
 ## histogram of ratings
@@ -78,4 +65,3 @@ pred <- predict(IB.Rec, r, type="ratings")
 as(pred, "matrix")
 pred <- predict(IB.Rec, r[3,], type="ratings")
 as(pred, "list")
-
